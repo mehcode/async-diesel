@@ -1,10 +1,10 @@
 [package]
-name = "tokio-diesel"
-version = "0.3.0"
+name = "async-diesel"
+version = "0.1.0"
 authors = ["Ryan Leckey <leckey.ryan@gmail.com>"]
 edition = "2018"
-description = "Integrate Diesel into Tokio cleanly and efficiently."
-repository = "https://github.com/mehcode/tokio-diesel"
+description = "Integrate Diesel into async-std cleanly and efficiently."
+repository = "https://github.com/mehcode/async-diesel"
 license = "MIT/Apache-2.0"
 categories = ["asynchronous", "database"]
 
@@ -13,9 +13,9 @@ async-trait = "0.1.21"
 diesel = { version = "1.4.3", features = [ "r2d2" ] }
 futures = "0.3.1"
 r2d2 = "0.8.7"
-tokio = { version = "0.2.4", features = [ "blocking" ] }
+async-std = { version = "1.4.0", features = [ "unstable" ] }
 
 [dev-dependencies]
 diesel = { version = "1.4.3", features = [ "postgres", "uuidv07" ] }
 uuid = { version = "0.7.4", features = [ "v4" ] }
-tokio = { version = "0.2.4", default-features = false, features = [ "full" ] }
+async-std = { version = "1.4.0", features = [ "attributes" ] }

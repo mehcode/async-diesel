@@ -1,3 +1,4 @@
+use async_std::task;
 use async_trait::async_trait;
 use diesel::{
     connection::SimpleConnection,
@@ -11,7 +12,6 @@ use diesel::{
     Connection,
 };
 use std::{error::Error as StdError, fmt};
-use tokio::task;
 
 pub type AsyncResult<R> = Result<R, AsyncError>;
 
@@ -78,7 +78,6 @@ where
             conn.batch_execute(&query).map_err(AsyncError::Error)
         })
         .await
-        .expect("task has panicked")
     }
 }
 
@@ -115,7 +114,6 @@ where
             f(&*conn).map_err(AsyncError::Error)
         })
         .await
-        .expect("task has panicked")
     }
 
     #[inline]
@@ -130,7 +128,6 @@ where
             conn.transaction(|| f(&*conn)).map_err(AsyncError::Error)
         })
         .await
-        .expect("task has panicked")
     }
 }
 
