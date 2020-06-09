@@ -1,4 +1,47 @@
-use async_std::task;
+#[cfg(feature = "async-std-runtime")]
+mod task {
+    use async_std::task;
+
+    pub async fn spawn_blocking<F, R>(f: F) -> R
+    where
+        F: FnOnce() -> R + Send + 'static,
+        R: Send + 'static,
+    {
+        task::spawn_blocking(f).await
+    }
+}
+
+#[cfg(feature = "tokio-runtime")]
+mod task {
+    use tokio::task;
+
+    pub async fn spawn_blocking<F, R>(f: F) -> R
+    where
+        F: FnOnce() -> R + Send + 'static,
+        R: Send + 'static,
+    {
+        task::spawn_blocking(f)
+            .await
+            .expect("The task being joined has panicked")
+    }
+}
+
+#[cfg(not(any(feature = "tokio-runtime", feature = "async-std-runtime")))]
+mod task {
+    compile_error!(
+        r#"Either "tokio-runtime" or "async-std-runtime" must be enabled for this crate."#
+    );
+
+    // provide dummy implementation to silent futher errors
+    pub async fn spawn_blocking<F, R>(f: F) -> R
+    where
+        F: FnOnce() -> R + Send + 'static,
+        R: Send + 'static,
+    {
+        f()
+    }
+}
+
 use async_trait::async_trait;
 use diesel::{
     connection::SimpleConnection,

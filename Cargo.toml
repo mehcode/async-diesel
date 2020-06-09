@@ -1,21 +1,29 @@
 [package]
 name = "async-diesel"
-version = "0.1.0"
-authors = ["Ryan Leckey <leckey.ryan@gmail.com>"]
+version = "0.2.0"
+authors = ["Ryan Leckey <leckey.ryan@gmail.com>", "Mindaugas Vinkelis <fraillt@gmail.com>"]
 edition = "2018"
-description = "Integrate Diesel into async-std cleanly and efficiently."
+description = "Integrate Diesel into async-std or tokio cleanly and efficiently."
 repository = "https://github.com/mehcode/async-diesel"
 license = "MIT/Apache-2.0"
 categories = ["asynchronous", "database"]
 
+[features]
+# no default feature, user must select either async-std or tokio
+default = []
+
+async-std-runtime = ["async-std"]
+tokio-runtime = ["tokio"]
+
 [dependencies]
-async-trait = "0.1.21"
-diesel = { version = "1.4.3", features = [ "r2d2" ] }
-futures = "0.3.1"
-r2d2 = "0.8.7"
-async-std = { version = "1.4.0", features = [ "unstable" ] }
+async-trait = "0.1.35"
+diesel = { version = "1.4.5", features = [ "r2d2" ] }
+futures = "0.3.5"
+r2d2 = "0.8.8"
+async-std = { version = "1.6.0", features = [ "unstable" ], optional = true }
+tokio = { version = "0.2.21", features = [ "blocking" ], optional = true }
 
 [dev-dependencies]
-diesel = { version = "1.4.3", features = [ "postgres", "uuidv07" ] }
-uuid = { version = "0.7.4", features = [ "v4" ] }
-async-std = { version = "1.4.0", features = [ "attributes" ] }
+diesel = { version = "1.4.5", features = [ "postgres", "uuidv07" ] }
+uuid = { version = "0.8.1", features = [ "v4" ] }
+async-std = { version = "1.6.0", features = [ "attributes" ] }

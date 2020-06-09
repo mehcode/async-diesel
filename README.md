@@ -1,5 +1,5 @@
 # Async Diesel
-> Integrate Diesel into [async-std](https://github.com/async-rs/async-std) cleanly and efficiently.
+> Integrate Diesel into [async-std](https://github.com/async-rs/async-std) or [tokio](https://github.com/tokio-rs/tokio) cleanly and efficiently.
 
 ## Usage
 
