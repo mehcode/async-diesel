@@ -10,12 +10,12 @@ categories = ["asynchronous", "database"]
 
 [dependencies]
 async-trait = "0.1.21"
-diesel = { version = "1.4.3", features = [ "r2d2" ] }
+diesel = { version = "2.0.0", features = [ "r2d2" ] }
 futures = "0.3.1"
 r2d2 = "0.8.7"
 async-std = { version = "1.4.0", features = [ "unstable" ] }
 
 [dev-dependencies]
-diesel = { version = "1.4.3", features = [ "postgres", "uuidv07" ] }
+diesel = { version = "2.0.0", features = [ "postgres", "uuid" ] }
 uuid = { version = "0.7.4", features = [ "v4" ] }
 async-std = { version = "1.4.0", features = [ "attributes" ] }
