@@ -1,0 +1,35 @@
+name: CI
+
+on: [push]
+
+env:
+    CARGO_TERM_COLOR: always
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/cache@v2
+              with:
+                  path: |
+                      ~/.cargo/registry
+                      ~/.cargo/git
+                      target
+                  key: ${{ runner.os }}
+
+            - name: Clippy
+              run: cargo clippy --all --tests -- -D warnings
+            - name: Build
+              run: cargo build --verbose
+            - name: Run tests
+              run: cargo test --verbose --workspace --doc
+            - name: Publish (dry run)
+              run: cargo publish --dry-run
+              if: github.ref != 'refs/heads/master'
+            #- name: Publish on crates.io
+            #  run: |
+            #    cargo login ${{ secrets.CRATES_IO_TOKEN }}
+            #    cargo publish
+            #  if: github.ref == 'refs/heads/master'
